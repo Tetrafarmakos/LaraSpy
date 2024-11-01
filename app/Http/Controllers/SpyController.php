@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Spy\Commands\CreateSpy;
-use Illuminate\Http\Request;
+use App\Application\SpyData;
+use App\Infrastructure\SpyRepository;
 
 class SpyController extends Controller
 {
-    public function create(Request $request)
+    public function create(SpyData $data)
     {
-        $command = new CreateSpy($request);
-        $spy = $command->execute();
+        $spy = SpyRepository::store($data);
 
         return response()->json($spy, 201);
     }

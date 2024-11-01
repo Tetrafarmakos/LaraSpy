@@ -2,25 +2,18 @@
 
 namespace App\Domain\Spy\Commands;
 
+use App\Application\SpyData;
 use App\Models\Spy;
-use Illuminate\Http\Request;
 
 class CreateSpy
 {
-    public function __construct(public Request $request)
+    public function __construct(public SpyData $data)
     {
     }
 
     public function execute(): Spy
     {
-        $spy = Spy::create([
-            'name' => $this->request->name,
-            'surname' => $this->request->surname,
-            'agency' => $this->request->agency,
-            'country_of_operation' => $this->request->country_of_operation,
-            'date_of_birth' => $this->request->date_of_birth,
-            'date_of_death' => $this->request->date_of_death
-        ]);
+        $spy = Spy::create($this->data->all());
 
         return $spy;
     }
