@@ -12,16 +12,26 @@ class SpyController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('auth:sanctum', only: ['create']),
+            new Middleware('auth:sanctum', only: ['store']),
         ];
     }
 
     public function index()
     {
+        $supportedFilters = ['age', 'name', 'surname'];
+
+        $providedFilters = array_keys(request()->all());
+
+        foreach ($providedFilters as $filter) {
+            if (!in_array($filter, $supportedFilters) && !in_array($filter, ['page', 'sort'])) {
+                return response()->json(['error' => "Unsupported filter: $filter"], 400);
+            }
+        }
+
         return response()->json(SpyRepository::index());
     }
 
-    public function create(SpyData $data)
+    public function store(SpyData $data)
     {
         return response()->json(SpyRepository::store($data), 201);
     }
