@@ -13,6 +13,6 @@ Route::middleware('guest')->group(function () {
     Route::post('login',[AuthenticatedApiController::class,'store'])->name('login');
 });
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('spies', SpyController::class);
-});
+Route::resource('spies', SpyController::class)->only(['index', 'create']);
+
+Route::middleware('guest')->get('spies/random',[SpyController::class,'random'])->middleware('throttle:10,1');
