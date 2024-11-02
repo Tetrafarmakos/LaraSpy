@@ -18,7 +18,7 @@ class SpyController extends Controller implements HasMiddleware
 
     public function index()
     {
-
+        return response()->json(SpyRepository::index());
     }
 
     public function create(SpyData $data)

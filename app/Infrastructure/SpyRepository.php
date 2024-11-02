@@ -17,7 +17,7 @@ class SpyRepository
     {
     }
 
-    public function index()
+    public static function index()
     {
         return (new GetFilteredSpies())->execute();
     }
