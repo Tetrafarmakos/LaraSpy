@@ -33,11 +33,11 @@ class SpyController extends Controller implements HasMiddleware
 
     public function store(SpyData $data)
     {
-        return response()->json(SpyRepository::store($data), 201);
+        return response()->json(SpyData::from(SpyRepository::store($data)), 201);
     }
 
     public function random()
     {
-        return response()->json(SpyRepository::random(5));
+        return response()->json(SpyData::collect(SpyRepository::random(5)));
     }
 }
